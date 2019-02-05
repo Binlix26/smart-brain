@@ -2,6 +2,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Runing on Heroku
 [Check it out](https://binlix26-smart-brain.herokuapp.com/)
+Your first operation will be slow as Heroku makes it sleep if it is not used.
 
 ## BackEnd API
 [Smart Brain API](https://github.com/Binlix26/smart-brain-api)
