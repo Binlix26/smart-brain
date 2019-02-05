@@ -1,5 +1,8 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Runing on Heroku
+[Check it out](https://binlix26-smart-brain.herokuapp.com/)
+
 ## BackEnd API
 [Smart Brain API](https://github.com/Binlix26/smart-brain-api)
 
