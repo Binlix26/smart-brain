@@ -1,7 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Runing on Heroku
-[Check it out](https://binlix26-smart-brain.herokuapp.com/)
+[Check it out](https://binlix26-smart-brain.herokuapp.com/)<br>
 Your first operation will be slow as Heroku makes it sleep if it is not used.
 
 ## BackEnd API
