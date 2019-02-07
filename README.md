@@ -4,6 +4,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 [Check it out](https://binlix26-smart-brain.herokuapp.com/)<br>
 Your first operation will be slow as Heroku makes it sleep if it is not used.
 
+Give it a go by using the login down below if you do not want to register an account.
+email: test@gmail.com
+password: test
+
 ## BackEnd API
 [Smart Brain API](https://github.com/Binlix26/smart-brain-api)
 
