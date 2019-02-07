@@ -4,8 +4,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 [Check it out](https://binlix26-smart-brain.herokuapp.com/)<br>
 Your first operation will be slow as Heroku makes it sleep if it is not used.
 
-Give it a go by using the login down below if you do not want to register an account.
-email: test@gmail.com
+Give it a go by using the login down below if you do not want to register an account.<br>
+email: test@gmail.com <br>
 password: test
 
 ## BackEnd API
