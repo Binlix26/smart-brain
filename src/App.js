@@ -22,6 +22,7 @@ const particlesOptions = {
 };
 
 const initailState = {
+    isLoading: false,
     input: '',
     imageUrl: '',
     box: [],
@@ -41,6 +42,7 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLoading: false,
             input: '',
             imageUrl: '',
             box: [],
@@ -68,7 +70,11 @@ class App extends Component {
             user: user.profile,
             rank: user.rank
         });
-    }
+    };
+
+    onLoadingChange = () => {
+        this.setState({isLoading: !this.state.isLoading});
+    };
 
     calculateFaceLocation = (resp) => {
         const image = document.getElementById('inputImage');
@@ -147,7 +153,7 @@ class App extends Component {
 
     // TODO make a form component to reduce code (Register & Sign in)
     render() {
-        const {imageUrl, isSignedIn, route, box} = this.state;
+        const {imageUrl, isSignedIn, route, box, isLoading} = this.state;
         return (
             <div className="App">
                 <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
@@ -168,7 +174,11 @@ class App extends Component {
                             /></div>)
                         : (
                             route === 'signin'
-                                ? <Signin onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>
+                                ? <Signin
+                                    onRouteChange={this.onRouteChange}
+                                    loadUser={this.loadUser}
+                                    isLoading={isLoading}
+                                    onLoadingChange={this.onLoadingChange}/>
                                 : <Register onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>
                         )
                 }
