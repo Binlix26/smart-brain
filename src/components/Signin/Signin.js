@@ -8,7 +8,8 @@ class Signin extends React.Component {
         this.state = {
             signInEmail: '',
             signInPassword: '',
-            errorMessage: ''
+            errorMessage: '',
+            lastKeyCode: null
         }
     }
 
@@ -17,12 +18,21 @@ class Signin extends React.Component {
     };
 
     onPasswordChange = (event) => {
-        this.setState({password: event.target.value});
-        console.log();
-        if (event.charCode === 13) {
-            this.onSubmitSignin();
-        }
+        this.setState({
+            password: event.target.value,
+            lastKeyCode: event.charCode
+        });
     };
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.state.lastKeyCode === 13) {
+            this.setState({lastKeyCode: null}); // important to keep it out of infinite loop
+            let event = document.createEvent('HTMLEvents');
+            event.initEvent('click', true, false);
+            document.querySelector('input[type=submit]').dispatchEvent(event);
+
+        }
+    }
 
     onSubmitSignin = () => {
         this.props.onLoadingChange();

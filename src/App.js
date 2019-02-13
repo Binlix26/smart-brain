@@ -23,6 +23,7 @@ const particlesOptions = {
 
 const initailState = {
     isLoading: false,
+    imageError: false,
     input: '',
     imageUrl: '',
     box: [],
@@ -43,6 +44,7 @@ class App extends Component {
         super(props);
         this.state = {
             isLoading: false,
+            imageError: false,
             input: '',
             imageUrl: '',
             box: [],
@@ -132,7 +134,7 @@ class App extends Component {
                 });
             this.setState({imageUrl: input});
         } else {
-            // TODO error notification
+            this.setState({imageError: true});
         }
     };
 
@@ -153,7 +155,7 @@ class App extends Component {
 
     // TODO make a form component to reduce code (Register & Sign in)
     render() {
-        const {imageUrl, isSignedIn, route, box, isLoading} = this.state;
+        const {imageUrl, isSignedIn, route, box, isLoading, imageError} = this.state;
         return (
             <div className="App">
                 <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
@@ -167,6 +169,7 @@ class App extends Component {
                             <ImageLinkForm
                                 onInputChange={this.onInputChange}
                                 onButtonSubmit={this.onImageSubmit}
+                                imageError={imageError}
                             />
                             <FaceRecognition
                                 imageUrl={imageUrl}
