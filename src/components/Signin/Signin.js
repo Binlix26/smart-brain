@@ -20,9 +20,12 @@ class Signin extends React.Component {
     onPasswordChange = (event) => {
         this.setState({
             password: event.target.value,
-            lastKeyCode: event.charCode
         });
     };
+
+    onPasswordKeyPress = (event) => {
+        this.setState({lastKeyCode: event.charCode})
+    }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.state.lastKeyCode === 13) {
@@ -30,7 +33,6 @@ class Signin extends React.Component {
             let event = document.createEvent('HTMLEvents');
             event.initEvent('click', true, false);
             document.querySelector('input[type=submit]').dispatchEvent(event);
-
         }
     }
 
@@ -79,7 +81,8 @@ class Signin extends React.Component {
                         </div>
                         <div className="mv3">
                             <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
-                            <input onKeyPress={this.onPasswordChange}
+                            <input onChange={this.onPasswordChange}
+                                   onKeyPress={this.onPasswordKeyPress}
                                    className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
                                    type="password" name="password" id="password"/>
                         </div>
