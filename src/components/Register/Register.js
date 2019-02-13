@@ -1,4 +1,8 @@
 import React from 'react';
+import Submit from "../Form/Submit";
+import Container from "../Form/Container";
+import Message from "../Message/Message";
+import Input from "../Form/Input";
 
 class Register extends React.Component {
     constructor(props) {
@@ -6,28 +10,45 @@ class Register extends React.Component {
         this.state = {
             email: '',
             password: '',
-            name: ''
+            name: '',
+            errorMessage: '',
+            lastKeyCode: null
         }
     }
 
     onNameChange = (event) => {
         this.setState({name: event.target.value});
-    }
+    };
 
     onEmailChange = (event) => {
         this.setState({email: event.target.value});
-    }
+    };
 
     onPasswordChange = (event) => {
         this.setState({password: event.target.value});
+    };
+
+    onPasswordKeyPress = (event) => {
+        this.setState({lastKeyCode: event.charCode})
+    };
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.state.lastKeyCode === 13) {
+            this.setState({lastKeyCode: null}); // important to keep it out of infinite loop
+            let event = document.createEvent('HTMLEvents');
+            event.initEvent('click', true, false);
+            document.querySelector('input[type=submit]').dispatchEvent(event);
+        }
     }
 
     onSubmitRegister = (event) => {
+        const {onLoadingChange, loadUser, onRouteChange} = this.props;
         const {email, password, name} = this.state;
         if (!email || !password || !name) {
-           // TODO add error notification
+            this.setState({errorMessage: 'Please enter valid registration input'});
             return;
         }
+        onLoadingChange();
         fetch('https://blooming-brushlands-15337.herokuapp.com/register', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -40,47 +61,50 @@ class Register extends React.Component {
             .then(response => response.json())
             .then(user => {
                 if (user.profile) {
-                    this.props.loadUser(user);
-                    this.props.onRouteChange('home');
+                    loadUser(user);
+                    onRouteChange('home');
+                } else {
+                    this.setState({errorMessage: user});
                 }
             })
-    }
+            .catch(err => console.log(err))
+            .finally(() => onLoadingChange());
+    };
 
     render() {
+        const {isLoading} = this.props;
+        const error = this.state.errorMessage;
+
         return (
-            <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
-                <main className="pa4 black-80">f
-                    <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
-                        <legend className="f1 fw6 ph0 mh0">Register</legend>
-                        <div className="mt3">
-                            <label className="db fw6 lh-copy f6" htmlFor="name">Name</label>
-                            <input onChange={this.onNameChange}
-                                   className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
-                                   type="text" name="name" id="name"/>
-                        </div>
-                        <div className="mt3">
-                            <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
-                            <input onChange={this.onEmailChange}
-                                   className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
-                                   type="email" name="email-address" id="email-address"/>
-                        </div>
-                        <div className="mv3">
-                            <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
-                            <input onChange={this.onPasswordChange}
-                                   className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
-                                   type="password" name="password" id="password"/>
-                        </div>
-                    </fieldset>
-                    <div className="">
-                        <input
-                            className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
-                            type="submit"
-                            value="Register"
-                            onClick={this.onSubmitRegister}
-                        />
-                    </div>
-                </main>
-            </article>
+            <Container>
+                <fieldset className='bw0'>
+                    <legend className='f1 fw6 ph0 mh0'>Register</legend>
+                    {error ? <div className='error_message'>{error}</div> : null}
+                    <Input
+                        id={'name'}
+                        name={'name'}
+                        type={'text'}
+                        onInputChange={this.onNameChange}
+                        onInputKeyPress={null}
+                    />
+                    <Input
+                        id={'email-address'}
+                        name={'email'}
+                        type={'email'}
+                        onInputChange={this.onEmailChange}
+                        onInputKeyPress={null}
+                    />
+                    <Input
+                        id={'password'}
+                        name={'password'}
+                        type={'password'}
+                        onInputChange={this.onPasswordChange}
+                        onInputKeyPress={this.onPasswordKeyPress}
+                    />
+                </fieldset>
+                <Submit value={'Register'} onSubmit={this.onSubmitRegister}/>
+                {isLoading ? <Message/> : null}
+            </Container>
         );
     }
 }

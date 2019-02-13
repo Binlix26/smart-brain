@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Input = ({id,name,onInputChange, onInputKeyPress}) => {
+const Input = ({id,name,type, onInputChange, onInputKeyPress}) => {
     const classname = name === 'password' ? 'mv3' : 'mt3';
     return (
         <div className={classname}>
@@ -11,7 +11,7 @@ const Input = ({id,name,onInputChange, onInputKeyPress}) => {
                 onChange={onInputChange}
                 onKeyPress={onInputKeyPress ? onInputKeyPress : null}
                 className='pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100'
-                type={name}
+                type={type}
                 name={id}
                 id={id}
             />

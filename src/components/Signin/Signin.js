@@ -28,7 +28,7 @@ class Signin extends React.Component {
 
     onPasswordKeyPress = (event) => {
         this.setState({lastKeyCode: event.charCode})
-    }
+    };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.state.lastKeyCode === 13) {
@@ -40,7 +40,8 @@ class Signin extends React.Component {
     }
 
     onSubmitSignin = () => {
-        this.props.onLoadingChange();
+        const {onLoadingChange, loadUser, onRouteChange} = this.props;
+        onLoadingChange();
         const {email, password} = this.state;
         fetch('https://blooming-brushlands-15337.herokuapp.com/signin', {
             method: 'POST',
@@ -53,14 +54,14 @@ class Signin extends React.Component {
             .then(response => response.json())
             .then(user => {
                 if (user.profile) {
-                    this.props.loadUser(user);
-                    this.props.onRouteChange('home');
+                    loadUser(user);
+                    onRouteChange('home');
                 } else {
                     this.setState({errorMessage: user});
                 }
             })
             .catch(err => console.log(err))
-            .finally(() => this.props.onLoadingChange());
+            .finally(() => onLoadingChange());
     };
 
     render() {
@@ -74,12 +75,14 @@ class Signin extends React.Component {
                     <Input
                         id={'email-address'}
                         name={'email'}
+                        type={'email'}
                         onInputChange={this.onEmailChange}
                         onInputKeyPress={null}
                     />
                     <Input
                         id={'password'}
                         name={'password'}
+                        type={'password'}
                         onInputChange={this.onPasswordChange}
                         onInputKeyPress={this.onPasswordKeyPress}
                     />

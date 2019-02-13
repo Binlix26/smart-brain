@@ -153,7 +153,6 @@ class App extends Component {
         }
     };
 
-    // TODO make a form component to reduce code (Register & Sign in)
     render() {
         const {imageUrl, isSignedIn, route, box, isLoading, imageError} = this.state;
         return (
@@ -181,8 +180,14 @@ class App extends Component {
                                     onRouteChange={this.onRouteChange}
                                     loadUser={this.loadUser}
                                     isLoading={isLoading}
-                                    onLoadingChange={this.onLoadingChange}/>
-                                : <Register onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>
+                                    onLoadingChange={this.onLoadingChange}
+                                />
+                                : <Register
+                                    onRouteChange={this.onRouteChange}
+                                    loadUser={this.loadUser}
+                                    isLoading={isLoading}
+                                    onLoadingChange={this.onLoadingChange}
+                                />
                         )
                 }
                 <Particles className='particles'
