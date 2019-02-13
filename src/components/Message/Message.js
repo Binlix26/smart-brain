@@ -8,7 +8,7 @@ const Message = () => {
     };
 
     return (
-        <div className="lds-css ng-scope absolute w3 h3 bottom--1">
+        <div className="lds-css ng-scope absolute w2 h2 bottom-1">
             <div className="lds-spinner" style={style_spinner}>
                 <div></div>
                 <div></div>

@@ -124,3 +124,8 @@
     -webkit-transform: translate(-25px, -25px) scale(0.25) translate(25px, 25px);
     transform: translate(-25px, -25px) scale(0.25) translate(25px, 25px);
 }
+
+.lds-css {
+    left: 50%;
+    transform: translateX(-50%);
+}

@@ -1,6 +1,9 @@
 import React from 'react';
 import Message from "../Message/Message";
 import './signin.css';
+import Container from "../Form/Container";
+import Input from "../Form/Input";
+import Submit from "../Form/Submit";
 
 class Signin extends React.Component {
     constructor(props) {
@@ -64,50 +67,37 @@ class Signin extends React.Component {
         const {onRouteChange, isLoading} = this.props;
         const error = this.state.errorMessage;
         return (
-            <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center relative">
-                <main className="pa4 black-80">
-                    <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
-                        <legend className="f1 fw6 ph0 mh0">Sign In</legend>
-                        {
-                            error ?
-                                <div className="error_message">{error}</div>
-                                : null
-                        }
-                        <div className="mt3">
-                            <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
-                            <input onChange={this.onEmailChange}
-                                   className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
-                                   type="email" name="email-address" id="email-address"/>
-                        </div>
-                        <div className="mv3">
-                            <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
-                            <input onChange={this.onPasswordChange}
-                                   onKeyPress={this.onPasswordKeyPress}
-                                   className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
-                                   type="password" name="password" id="password"/>
-                        </div>
-                    </fieldset>
-                    <div className="">
-                        <input
-                            className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
-                            type="submit"
-                            value="Sign in"
-                            onClick={this.onSubmitSignin}/>
-                    </div>
-                    <div className="lh-copy mt3">
-                        <a href="#0"
-                           className="f6 link dim black db"
-                           onClick={() => {
-                               onRouteChange('register')
-                           }}
-                        >Register</a>
-                    </div>
-                </main>
-                {isLoading
-                    ? <Message/>
-                    : null
-                }
-            </article>
+            <Container>
+                <fieldset className='bw0'>
+                    <legend className='f1 fw6 ph0 mh0'>Sign In</legend>
+                    {error ? <div className='error_message'>{error}</div> : null}
+                    <Input
+                        id={'email-address'}
+                        name={'email'}
+                        onInputChange={this.onEmailChange}
+                        onInputKeyPress={null}
+                    />
+                    <Input
+                        id={'password'}
+                        name={'password'}
+                        onInputChange={this.onPasswordChange}
+                        onInputKeyPress={this.onPasswordKeyPress}
+                    />
+                </fieldset>
+                <Submit value={'Sign In'} onSubmit={this.onSubmitSignin} />
+                <div className='lh-copy mt3'>
+                    <a
+                        href='#'
+                        className='f6 link dim black db'
+                        onClick={() => {
+                            onRouteChange('register');
+                        }}
+                    >
+                        Register
+                    </a>
+                </div>
+                {isLoading ? <Message/> : null}
+            </Container>
         );
     }
 }
